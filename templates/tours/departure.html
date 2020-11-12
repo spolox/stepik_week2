@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% load tours_filter %}
+
+{% block main %}
+    <h1 class="display-5 mt-4">Летим {{ departure|get_departure:True }}</h1>
+    <p class="mb-4">Найдено {{ tours|length }} туров, от {{ tours|get_min:'price'}} до {{ tours|get_max:'price'}}
+        и от {{ tours|get_min:'nights'}} ночей до {{ tours|get_max:'nights'}} ночей</p>
+    <div class="row mt-5">
+        {% for tour_key, tour_value in tours.items %}
+            <div class="col-4">
+                <div class="card mb-4">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <img class="card-img-top embed-responsive-item" src="{{ tour_value.picture }}" alt="{{ tour_value.title }}" />
+                    </div>
+                    <div class="card-body">
+                    <h2 class="h5 card-title">{{ tour_value.title }}</h2>
+                        <p class="card-text">{{ tour_value.description }}</p>
+                        <a href= {% url 'tour' tour_key %} class="btn btn-sm btn-primary">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
