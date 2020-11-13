@@ -1,7 +1,7 @@
 import random
 
 from django.http import Http404
-from django.http import HttpResponse, HttpResponseNotFound
+from django.http import HttpResponseNotFound
 from django.views.generic.base import TemplateView
 
 import data
