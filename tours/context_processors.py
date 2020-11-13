@@ -3,5 +3,6 @@ import data
 
 def get_title(request):
     return {
-        'title': data.title
+        'title': data.title,
+        'departures': data.departures,
     }

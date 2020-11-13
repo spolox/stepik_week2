@@ -1,10 +1,18 @@
 import random
 
-from django.views.generic.base import TemplateView
 from django.http import Http404
+from django.http import HttpResponse, HttpResponseNotFound
+from django.views.generic.base import TemplateView
 
 import data
 
+
+def custom_handler404(request, exception):
+    return HttpResponseNotFound('Извините, страница не найдена.')
+
+
+def custom_handler500(request):
+    return HttpResponseNotFound('Внутреняя ошибка сервака. Приносим свои извинения, повторите попытку позже')
 
 
 class MainView(TemplateView):
@@ -16,9 +24,7 @@ class MainView(TemplateView):
         context['description'] = data.description
         keys = list(data.tours.keys())
         random.shuffle(keys)
-        keys = keys[:6]
-        tours = data.tours.copy()
-        context['tours'] = dict((key, value) for (key, value) in tours.items() if key in keys)
+        context['tours'] = dict((key, value) for (key, value) in data.tours.items() if key in keys[:6])
         return context
 
 
@@ -27,8 +33,7 @@ class DepartureView(TemplateView):
 
     def get_context_data(self, departure, **kwargs):
         context = super().get_context_data(**kwargs)
-        tours = data.tours.copy()
-        context['tours'] = dict((key, value) for (key, value) in tours.items() if value['departure'] == departure)
+        context['tours'] = dict((key, value) for (key, value) in data.tours.items() if value['departure'] == departure)
         context['departure'] = departure
         return context
 
