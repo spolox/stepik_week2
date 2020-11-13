@@ -33,10 +33,10 @@ class DepartureView(TemplateView):
 
     def get_context_data(self, departure, **kwargs):
         context = super().get_context_data(**kwargs)
+        if departure not in data.departures.keys():
+            raise Http404
         context['tours'] = dict((key, value) for (key, value) in data.tours.items() if value['departure'] == departure)
-        context['departure'] = departure
         return context
-
 
 class TourView(TemplateView):
     template_name = "tours/tour.html"
