@@ -36,6 +36,7 @@ class DepartureView(TemplateView):
         if departure not in data.departures:
             raise Http404
         context['tours'] = dict((key, value) for (key, value) in data.tours.items() if value['departure'] == departure)
+        context['departure'] = departure
         return context
 
 class TourView(TemplateView):
