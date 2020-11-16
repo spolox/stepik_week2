@@ -4,7 +4,7 @@
 
 {% block main %}
     <section class="mt-3 pb-5">
-        <h1 class="display-3 mt-4">{{ tour.title }} {% for _ in tour.stars|add:0|range %}★{% endfor %}</h1>
+        <h1 class="display-3 mt-4">{{ tour.title }} {% for _ in tour.stars|to_int|range %}★{% endfor %}</h1>
         <p class="lead">{{ tour.country }} {{ tour.departure|get_departure:False }} {{ tour.nights }} ночей</p>
         <img src="{{ tour.picture }}" class="w-75" alt="">
         <p class="my-4 w-75">{{ tour.description }}</p>

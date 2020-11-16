@@ -1,5 +1,5 @@
 from django import template
-from django.http import Http404
+from django.http import Http404, HttpResponse
 
 import data
 
@@ -9,6 +9,15 @@ register = template.Library()
 @register.filter(name='range')
 def get_range(number):
     return range(number)
+
+
+@register.filter(name='to_int')
+def to_int(string):
+    try:
+        string_int = int(string)
+    except ValueError:
+        return HttpResponse(status=500)
+    return string_int
 
 
 @register.filter(name='get_departure')
